@@ -123,15 +123,6 @@ public class ErrorHandler {
         );
     }
 
-    @ExceptionHandler(Exception.class)
-    @ResponseStatus(HttpStatus.INTERNAL_SERVER_ERROR)
-    public ApiError handleUnexpectedException(final Exception e) {
-        log.error("Unexpected exception: {}", e.getMessage(), e);
-        return new ApiError(HttpStatus.INTERNAL_SERVER_ERROR,
-                "An unexpected error occurred.",
-                e.getMessage());
-    }
-
     private void getLog(RuntimeException e, String exceptionName) {
         StackTraceElement[] stackTrace = e.getStackTrace();
         if (stackTrace.length > 0) {
