@@ -27,6 +27,7 @@ public class UserServiceImpl implements UserService {
     private final UserMapper userMapper;
 
     @Override
+    @Transactional
     public UserDto create(UserDto userDto) {
         log.info("{}: Starting execution of {} method.", colorizeClass("UserService"), colorizeMethod("create()"));
         log.info("{}.{}: Mapping from UserDto to User.", colorizeClass("UserService"), colorizeMethod("create()"));
@@ -66,6 +67,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    @Transactional
     public void deleteById(Long userId) {
         log.info("{}: Starting execution of {} method.", colorizeClass("UserService"), colorizeMethod("deleteById()"));
 

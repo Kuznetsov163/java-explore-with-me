@@ -7,10 +7,11 @@ import lombok.experimental.FieldDefaults;
 @Entity
 @Table(name = "categories")
 @Builder
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Getter
+@Setter
 public class Category {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

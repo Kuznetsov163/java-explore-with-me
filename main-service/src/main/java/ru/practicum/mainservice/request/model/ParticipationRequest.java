@@ -12,11 +12,12 @@ import java.time.LocalDateTime;
 @Table(name = "requests", uniqueConstraints = {
         @UniqueConstraint(columnNames = {"event_id", "requester_id"})
 })
-@Data
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Getter
+@Setter
 public class ParticipationRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)

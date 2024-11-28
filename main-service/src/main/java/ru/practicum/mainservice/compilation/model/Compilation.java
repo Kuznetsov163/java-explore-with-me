@@ -9,7 +9,8 @@ import java.util.Set;
 
 @Entity
 @Table(name = "compilations")
-@Data
+@Getter
+@Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder

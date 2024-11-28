@@ -10,11 +10,12 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "events")
-@Data
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Getter
+@Setter
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
