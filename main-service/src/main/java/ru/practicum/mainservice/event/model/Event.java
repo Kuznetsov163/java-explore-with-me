@@ -10,12 +10,12 @@ import java.time.LocalDateTime;
 
 @Entity
 @Table(name = "events")
+@Getter
+@Setter
 @Builder
 @AllArgsConstructor
 @NoArgsConstructor
 @FieldDefaults(level = AccessLevel.PRIVATE)
-@Getter
-@Setter
 public class Event {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -54,4 +54,5 @@ public class Event {
     @Column(nullable = false, length = 120)
     String title;
     Long views;
+    Double rating;
 }
