@@ -1,4 +1,4 @@
-package ru.practicum.mainservice.request.model;
+package ru.practicum.mainservice.rating.model;
 
 import jakarta.persistence.*;
 import lombok.*;
@@ -9,28 +9,28 @@ import ru.practicum.mainservice.user.model.User;
 import java.time.LocalDateTime;
 
 @Entity
-@Table(name = "requests", uniqueConstraints = {
-        @UniqueConstraint(columnNames = {"event_id", "requester_id"})
-})
+@Table(name = "ratings",
+        uniqueConstraints = @UniqueConstraint(columnNames = {"event_id", "user_id"}))
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
-public class ParticipationRequest {
+public class Rating {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     Long id;
     @Column(nullable = false)
-    LocalDateTime created;
+    Double rating;
+    @Column(length = 5000)
+    String comment;
     @ManyToOne
-    @JoinColumn(nullable = false)
+    @JoinColumn(name = "event_id", nullable = false)
     Event event;
     @ManyToOne
-    @JoinColumn(nullable = false)
-    User requester;
-    @Enumerated(EnumType.STRING)
+    @JoinColumn(name = "user_id", nullable = false)
+    User user;
     @Column(nullable = false)
-    RequestStatus status;
+    LocalDateTime timestamp;
 }

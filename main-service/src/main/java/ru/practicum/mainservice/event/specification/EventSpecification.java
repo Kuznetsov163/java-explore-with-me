@@ -1,16 +1,14 @@
 package ru.practicum.mainservice.event.specification;
 
 import jakarta.persistence.criteria.Predicate;
-import lombok.NoArgsConstructor;
-import lombok.AccessLevel;
 import org.springframework.data.jpa.domain.Specification;
 import ru.practicum.mainservice.event.model.Event;
+import ru.practicum.mainservice.event.model.EventSortType;
 import ru.practicum.mainservice.event.model.State;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
-@NoArgsConstructor(access = AccessLevel.PRIVATE)
 public class EventSpecification {
     public static Specification<Event> hasUsers(List<Long> users) {
         return (root, query, builder) -> users == null || users.isEmpty()
@@ -44,6 +42,10 @@ public class EventSpecification {
 
     public static Specification<Event> onlyPublished() {
         return (root, query, builder) -> builder.equal(root.get("state"), State.PUBLISHED);
+    }
+
+    public static Specification<Event> onlyCompleted() {
+        return (root, query, builder) -> builder.equal(root.get("state"), State.COMPLETED);
     }
 
     public static Specification<Event> searchText(String text) {
@@ -84,13 +86,18 @@ public class EventSpecification {
                 .and(beforeRangeEnd(rangeEnd));
     }
 
-    public static Specification<Event> getPublicFilters(String text, List<Long> categories, Boolean paid, LocalDateTime rangeStart, LocalDateTime rangeEnd, Boolean onlyAvailable) {
+    public static Specification<Event> getPublicFilters(String text,
+                                                        List<Long> categories,
+                                                        Boolean paid,
+                                                        LocalDateTime rangeStart,
+                                                        LocalDateTime rangeEnd,
+                                                        Boolean onlyAvailable,
+                                                        EventSortType sortType) {
         LocalDateTime now = LocalDateTime.now();
 
-        return Specification.where(onlyPublished())
+        return Specification.where(sortType == null || !sortType.equals(EventSortType.RATING) ? onlyPublished() : onlyCompleted())
                 .and(searchText(text))
                 .and(hasCategories(categories))
-                .and(onlyPublished())
                 .and(isPaid(paid))
                 .and(rangeStart != null ? afterRangeStart(rangeStart) : afterRangeStart(now))
                 .and(beforeRangeEnd(rangeEnd))
